@@ -1,0 +1,75 @@
+<?php
+
+include_once("db_connection.php");
+
+// $postdata = file_get_contents("php://input");
+// if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['image'])) {
+$targetDir = 'uploads/';
+$targetFile = $targetDir . basename($_FILES['image']['name']);
+$uploadOk = 1;
+$imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
+
+if(isset($postdata) && !empty($postdata)){ 
+    $request = json_decode($postdata);
+
+   
+    $employeeTitle: trim($request->employeeTitle),
+      $dateOfBirth: trim($request->employeeTitle),
+      $address: trim($request->employeeTitle),
+      $state: trim($request->employeeTitle),
+      $mobileNumber: trim($request->employeeTitle),
+      $panCardNumber: trim($request->employeeTitle),
+      $employeeName: trim($request->employeeTitle),
+      $dateOfJoining: trim($request->employeeTitle),
+      $city: trim($request->employeeTitle),
+      $pincode: trim($request->employeeTitle),
+      $email: trim($request->employeeTitle),
+      
+
+
+    // Check if the image file is a valid image
+    $check = getimagesize($_FILES['image']['tmp_name']);
+    if ($check === false) {
+        echo json_encode(['message' => 'Invalid image file']);
+        $uploadOk = 0;
+    }
+
+    // Check if the file already exists
+    if (file_exists($targetFile)) {
+        echo json_encode(['message' => 'File already exists']);
+        $uploadOk = 0;
+    }
+
+    // Allow only specific file types (e.g., jpeg, jpg, png)
+    // You can customize this list based on your requirements
+    if ($imageFileType !== 'jpg' && $imageFileType !== 'jpeg' && $imageFileType !== 'png') {
+        echo json_encode(['message' => 'Only JPG, JPEG, and PNG files are allowed']);
+        $uploadOk = 0;
+    }
+
+    // If no errors, move the uploaded file to the desired location
+    if ($uploadOk === 1) {
+        if (move_uploaded_file($_FILES['image']['tmp_name'], $targetFile)) {
+            // Insert the image file path into the database
+            $filePath = $targetFile;
+            $sql = "INSERT INTO employeedetails (employeeTitle, dateOfBirth, address, state, mobileNumber, panCardNumber,
+            employeeName,dateOfJoining,city, pincode, email, image) VALUES ('$employeeTitle', '$dateOfBirth', '$address', '$state', '$mobileNumber', '$panCardNumber',
+            '$employeeName','$dateOfJoining','$city', '$pincode', '$email','$filePath')";
+    }
+}
+
+if ($mysqli->query($sql)) {
+    $employeeId = $mysqli->insert_id;
+    $data=array('message'=>'success', 'employeeId' => $employeeId);
+    echo json_encode ($data);    
+}else{
+    $data-array('message' =>"failed");
+    echo json_encode($data);
+    
+}
+}
+
+
+?>
+
+
