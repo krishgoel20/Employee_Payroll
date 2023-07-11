@@ -1,0 +1,102 @@
+<div class="container">
+  <app-header></app-header>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" (click)="formTitle = 'Add Grade'" style="width: 100%;">        
+        Add Grade
+      </button>
+    <div>
+      <!-- <ngx-toastr></ngx-toastr> -->
+      
+<!-- Modal -->
+<div class="modal fade" #myModal id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{formTitle}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="width: 10px;
+        padding-right: 32px;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- <h1 class="text-center mt-1">Add Department</h1> -->
+        <form class="text-center" [formGroup]="addGradeForm" (ngSubmit)="onSubmit()">
+          <div class="formcontainer">
+          <div>
+          <div>
+            <label for="grade_name">Grade Name:</label>
+            <input type="text" id="grade_name" formControlName="grade_name">
+          </div>
+          <div *ngIf="addGradeForm.controls['grade_name'].invalid && addGradeForm.controls['grade_name'].touched" class="error-message">
+              Grade Name is required.
+          </div>
+          <div *ngIf="gradeAlreadyThere" class="error-message">
+            Grade Already There
+          </div>                                
+          
+        </div>
+       
+      </div>
+      <div class="buttoncontainer">
+      <button type="submit">Submit</button>
+    </div>
+         
+        </form>
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div> -->
+    </div>
+  </div>
+</div>
+          
+    </div>      
+
+    <div>
+      <div class="mat-elevation-z8" *ngIf="display">
+        <table mat-table [dataSource]="dataSource">
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef>ID</th>
+            <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+          </ng-container>
+      
+          <ng-container matColumnDef="gradeName">
+            <th mat-header-cell *matHeaderCellDef>Grade Name</th>
+            <td mat-cell *matCellDef="let element">{{ element.grade_name }}</td>
+          </ng-container>      
+          
+      
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Action</th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-icon-button color="primary" class="" data-toggle="modal" data-target="#myModal" (click)="editEmployee(element.id)" style="margin-right: 5px">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="deleteEmployee(element.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+      
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+        <mat-paginator
+        [length]="dataSource.data.length"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="pageSizeOptions"
+        showFirstLastButtons
+        (page)="onPageChange($event)"
+      ></mat-paginator>     
+        
+      </div>
+      
+            
+    
+          
+    </div>
+</div>
+
+
+
+

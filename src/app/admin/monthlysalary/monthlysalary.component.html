@@ -1,0 +1,318 @@
+<div class="container">
+  <app-header></app-header>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" (click)="selectedGrade={}; formTitle='Add Salary'">        
+        Open Form
+      </button>
+    <div>
+
+
+      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <!-- {{}} this is called interpolation - it take data from ts file -->
+              <h5 class="modal-title" id="exampleModalLabel" >{{formTitle}} </h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="width: 10px;
+              padding-right: 32px;">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form class="text-center" [formGroup]="employeeSalaryForm" (ngSubmit)="onSubmit()">
+                <div class="formcontainer">
+                <div>
+                <div>
+                  <label for="emp_id">Employee ID:</label>
+                  <input type="text" id="emp_id" formControlName="emp_id">
+                </div>                
+                <div *ngIf="employeeSalaryForm.controls['emp_id'].invalid && employeeSalaryForm.controls['emp_id'].touched" class="error-message">
+                    Employee ID is required.
+                </div>
+                <!-- <div>
+                  <label for="emp_name">Employee Name:</label>
+                  <input type="text" id="emp_name" formControlName="emp_name">
+                </div>                
+                <div *ngIf="employeeSalaryForm.controls['emp_name'].invalid && employeeSalaryForm.controls['emp_name'].touched" class="error-message">
+                    Employee Name is required.
+                </div> -->
+                <div>
+                  <label for="emp_salary_reimbursment">Salary Reimbursement:</label>
+                  <input type="text" id="emp_salary_reimbursment" formControlName="emp_salary_reimbursment">
+                </div>                
+                <div *ngIf="employeeSalaryForm.controls['emp_salary_reimbursment'].invalid && employeeSalaryForm.controls['emp_salary_reimbursment'].touched" class="error-message">
+                    Salary Reimbursement is required.
+                </div>
+                <div *ngIf="formTitle !== 'Add Salary'">
+                  <!-- <label for="currentGradeName">Current Grade Name:</label>
+                  <input type="text" id="currentGradeName" formControlName="currentGradeName"> -->
+                  <label for="">Current Grade Name:</label>
+                      <select [(ngModel)]="selectedGrade.grade_name" (change)="selectedGradeDetail($event)" [ngModelOptions]="{standalone: true}" [disabled]="formTitle == 'Add Salary' ? false: true">
+                        <option>Select</option>
+                        <option *ngFor="let option of gradeList" [value]="option.grade_name">{{ option.grade_name }}</option>
+                      </select>                                      
+                </div>
+                <div *ngIf="formTitle == 'Add Salary'">
+                  <!-- <label for="currentGradeName">Current Grade Name:</label>
+                  <input type="text" id="currentGradeName" formControlName="currentGradeName"> -->
+                  <label for="">Current Grade Name:</label>
+                      <select  (change)="selectedGradeDetail($event)">
+                        <option>Select</option>
+                        <option *ngFor="let option of gradeList" [value]="option.grade_name">{{ option.grade_name }}</option>
+                      </select>                                      
+                </div>
+                <!-- <div *ngIf="employeeSalaryForm.controls['currentGradeName'].invalid && employeeSalaryForm.controls['currentGradeName'].touched" class="error-message">
+                    Current Grade Name is required.
+                </div> -->
+                <div>
+                  <label for="emp_salary_month">Employee Salary Month:</label>
+                  <input type="text" id="emp_salary_month" formControlName="emp_salary_month">
+                </div>
+                <div *ngIf="employeeSalaryForm.controls['emp_salary_month'].invalid && employeeSalaryForm.controls['emp_salary_month'].touched" class="error-message">
+                    Employee Salary Month is required.
+                </div>
+                <div>
+                  <label for="emp_hra">HRA:</label>
+                  <input type="text" id="emp_hra" [(ngModel)]="selectedGrade.grade_hra" formControlName="emp_hra">
+                </div>        
+                <div *ngIf="employeeSalaryForm.controls['emp_hra'].invalid && employeeSalaryForm.controls['emp_hra'].touched" class="error-message">
+                    HRA is required.
+                </div>      
+                <div>
+                  <label for="emp_ta">TA:</label>
+                  <input type="text" id="ta" [(ngModel)]="selectedGrade.grade_ta" formControlName="emp_ta">
+                </div>
+                <div *ngIf="employeeSalaryForm.controls['emp_ta'].invalid && employeeSalaryForm.controls['emp_ta'].touched" class="error-message">
+                    TA is required.
+                </div>
+                <div>
+                  <label for="emp_bonus">Bonus:</label>
+                  <input type="text" id="emp_bonus" [(ngModel)]="selectedGrade.grade_bonus" formControlName="emp_bonus">
+                </div>
+                <div *ngIf="employeeSalaryForm.controls['emp_bonus'].invalid && employeeSalaryForm.controls['emp_bonus'].touched" class="error-message">
+                    emp_bonus is required.
+                </div>
+                <div>
+                    <label for="emp_pf">Provident Fund:</label>
+                    <input type="text" id="emp_pf" [(ngModel)]="selectedGrade.grade_pf" formControlName="emp_pf">
+                  </div>
+                  <div *ngIf="employeeSalaryForm.controls['emp_pf'].invalid && employeeSalaryForm.controls['emp_pf'].touched" class="error-message">
+                      Provident Fund is required.
+                  </div>
+              </div>
+              <div>
+              
+                <div>
+                  <label for="emp_total_salary">Total Salary:</label>
+                  <input type="number" id="emp_total_salary" formControlName="emp_total_salary">
+                </div>
+                <div *ngIf="employeeSalaryForm.controls['emp_total_salary'].invalid && employeeSalaryForm.controls['emp_total_salary'].touched" class="error-message">
+                    Total Salary is required.
+                </div>
+                <div>
+                  <!-- <label for="currentDepartmentName">Current Department Name:</label>
+                  <input type="text" id="currentDepartmentName" formControlName="currentDepartmentName"> -->
+                  <label for="dep_name">Department Name:</label>
+                      <select  (change)="selectedDepartmentDetail($event)">
+                        <option>Select</option>
+                        <option *ngFor="let option of departmentList" [value]="option.id">{{ option.dept_name }}</option>
+                      </select>                                      
+                </div>
+                <!-- <div *ngIf="employeeSalaryForm.controls['currentDepartmentName'].invalid && employeeSalaryForm.controls['currentDepartmentName'].touched" class="error-message">
+                    Current Department Name is required.
+                </div> -->
+                <div>
+                  <label for="emp_salary_year">Employee Salary Year:</label>
+                  <input type="text" id="emp_salary_year" formControlName="emp_salary_year">
+                </div>
+                <div *ngIf="employeeSalaryForm.controls['emp_salary_year'].invalid && employeeSalaryForm.controls['emp_salary_year'].touched" class="error-message">
+                    Employee Salary Year is required.
+                </div>
+                <div>
+                  <label for="emp_basic">Basic:</label>
+                  <input type="text" id="emp_basic" [(ngModel)]="selectedGrade.grade_bonus" formControlName="emp_basic">
+                </div>
+                <div *ngIf="employeeSalaryForm.controls['emp_basic'].invalid && employeeSalaryForm.controls['emp_basic'].touched" class="error-message">
+                   Basic is required.
+                </div>
+                <div>
+                    <label for="emp_da">DA:</label>
+                    <input type="text" id="emp_da" [(ngModel)]="selectedGrade.grade_da" formControlName="emp_da">
+                  </div>
+                  <div *ngIf="employeeSalaryForm.controls['emp_da'].invalid && employeeSalaryForm.controls['emp_da'].touched" class="error-message">
+                      DA & Name is required.
+                  </div>
+                  <div>
+                    <label for="emp_ma">Medical Allowance:</label>
+                    <input type="text" id="emp_ma" [(ngModel)]="selectedGrade.grade_ma" formControlName="emp_ma">
+                  </div>
+                  <div *ngIf="employeeSalaryForm.controls['emp_ma'].invalid && employeeSalaryForm.controls['emp_ma'].touched" class="error-message">
+                    Medical Allowance & Name is required.
+                  </div>
+                  <div>
+                    <label for="emp_gross">Gross:</label>
+                    <input type="text" id="emp_gross" formControlName="emp_gross">
+                  </div>
+                  <div *ngIf="employeeSalaryForm.controls['emp_gross'].invalid && employeeSalaryForm.controls['emp_gross'].touched" class="error-message">
+                    Gross is required.
+                  </div>
+                  <div>
+                    <label for="emp_pt">Profession Tax:</label>
+                    <input type="text" id="emp_pt" [(ngModel)]="selectedGrade.grade_pf" formControlName="emp_pt">
+                  </div>
+                  <div *ngIf="employeeSalaryForm.controls['emp_pt'].invalid && employeeSalaryForm.controls['emp_pt'].touched" class="error-message">
+                    Profession Tax is required.
+                  </div>
+                
+              </div>
+             
+            </div>
+            <div class="buttoncontainer">
+            <button type="submit">Submit</button>
+          </div>
+               
+              </form>
+            </div>
+            <!-- <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div> -->
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+
+
+
+<div>
+    <!-- <mat-form-field>
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+      </mat-form-field> -->
+      
+      <div class="mat-elevation-z8" *ngIf="display">
+         <table mat-table [dataSource]="dataSource" matSort>
+      
+          <!-- ID Column -->
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+            <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="emp_id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Emp ID </th>
+            <td mat-cell *matCellDef="let row"> {{row.emp_id}} </td>
+          </ng-container>
+      
+          <!-- Progress Column -->
+          <ng-container matColumnDef="emp_salary_month">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> emp_salary_month </th>
+            <td mat-cell *matCellDef="let row"> {{row.emp_salary_month}} </td>
+          </ng-container>
+      
+          <!-- Name Column -->
+          <ng-container matColumnDef="emp_salary_year">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> emp_salary_year </th>
+            <td mat-cell *matCellDef="let row"> {{row.emp_salary_year}} </td>
+          </ng-container>
+      
+          <!-- Fruit Column -->
+          <ng-container matColumnDef="emp_salary_reimbursment">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> emp_salary_reimbursment </th>
+            <td mat-cell *matCellDef="let row"> {{row.emp_salary_reimbursment}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="emp_dept_id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> emp_dept_id </th>
+            <td mat-cell *matCellDef="let row"> {{row.emp_id}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="emp_grade_id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> emp_grade_id </th>
+            <td mat-cell *matCellDef="let row"> {{row.emp_grade_id}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="emp_basic">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> emp_basic </th>
+            <td mat-cell *matCellDef="let row"> {{row.emp_basic}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="emp_da">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> emp_da </th>
+            <td mat-cell *matCellDef="let row"> {{row.emp_da}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="emp_ta">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> emp_ta </th>
+            <td mat-cell *matCellDef="let row"> {{row.emp_ta}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="emp_hra">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> emp_hra </th>
+            <td mat-cell *matCellDef="let row"> {{row.emp_hra}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="emp_ma">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> emp_ma </th>
+            <td mat-cell *matCellDef="let row"> {{row.emp_ma}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="emp_bonus">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> emp_bonus </th>
+            <td mat-cell *matCellDef="let row"> {{row.emp_bonus}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="emp_pf">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> emp_pf </th>
+            <td mat-cell *matCellDef="let row"> {{row.emp_pf}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="emp_pt">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> emp_pt </th>
+            <td mat-cell *matCellDef="let row"> {{row.emp_pt}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="emp_gross">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> emp_gross </th>
+            <td mat-cell *matCellDef="let row"> {{row.emp_gross}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="emp_total_salary">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> emp_total_salary </th>
+            <td mat-cell *matCellDef="let row"> {{row.emp_total_salary}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Action</th>
+            <td mat-cell *matCellDef="let element">
+              <button type="button"  data-toggle="modal" data-target="#myModal" mat-icon-button color="primary" (click)="editEmployee(element)" style="margin-right: 5px">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="deleteEmployee(element.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+      
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      
+          <!-- Row shown when there is no matching data. -->
+          <!-- <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+          </tr>               -->
+        </table>           
+        
+      </div>
+      <!-- <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator> -->
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+      showFirstLastButtons
+      aria-label="Select page of periodic elements">
+</mat-paginator>
+      
+</div>
+
+

@@ -1,0 +1,96 @@
+<div class="container">
+  <app-header></app-header>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="width: 100%" (click)="changeFormTitle()">        
+        Add Department
+      </button>
+    <div>
+
+      <!-- Modal -->
+<div class="modal fade" #myModal id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <!-- {{}} this is called interpolation - it take data from ts file -->
+        <h5 class="modal-title" id="exampleModalLabel" >{{formTitle}} </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="width: 10px;
+        padding-right: 32px;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="text-center" [formGroup]="departmentForm" (ngSubmit)="onSubmit()">
+          <div class="formcontainer">
+          <div>
+          <div>
+            <!-- <label for="departmentName">Department Name:</label> -->
+            <input type="text" id="dept_name" formControlName="dept_name">
+          </div>
+          <div *ngIf="departmentForm.controls['dept_name'].invalid && departmentForm.controls['dept_name'].touched" class="error-message">
+              Department Name is required.
+          </div>                                
+          <div *ngIf="departmentAlreadyThere" class="error-message">
+            Department Already There
+          </div>
+          
+        </div>
+       
+      </div>
+      <div class="buttoncontainer">
+      <button type="submit">Submit</button>
+    </div>
+         
+        </form>
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div> -->
+    </div>
+  </div>
+</div>
+      
+<div>    
+      
+      <div class="mat-elevation-z8" *ngIf="display">
+        <table mat-table [dataSource]="dataSource">
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef>ID</th>
+            <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+          </ng-container>
+      
+          <ng-container matColumnDef="DepartmentName">
+            <th mat-header-cell *matHeaderCellDef>Department Name</th>
+            <td mat-cell *matCellDef="let element">{{ element.dept_name }}</td>
+          </ng-container>      
+          
+      
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Action</th>
+            <td mat-cell *matCellDef="let element">
+              <button data-toggle="modal" data-target="#myModal" #modalButton style="display:none"></button>
+              <button type="button" data-toggle="modal" data-target="#myModal"  mat-icon-button color="primary" (click)="editEmployee(element.id)" style="margin-right: 5px">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="deleteEmployee(element.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+      
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+        <mat-paginator
+        [length]="dataSource.data.length"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="pageSizeOptions"
+        showFirstLastButtons
+        (page)="onPageChange($event)"
+      ></mat-paginator>     
+        
+      </div>
+     
+      
+</div>
+
+

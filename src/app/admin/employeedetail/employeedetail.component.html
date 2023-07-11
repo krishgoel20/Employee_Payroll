@@ -1,0 +1,247 @@
+<div class="container">
+  <app-header></app-header>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="width: 100%" (click)="formTitle = 'Add Employee Detail'; editpanimage=''; employeeForm.reset()">        
+        Add Employee Detail
+      </button>
+    <div>
+
+      <!-- Modal -->
+<div class="modal fade" #myModal id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{formTitle}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="width: 10px;
+        padding-right: 32px;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="text-center" [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+          <div class="formcontainer">
+          <div>
+          <div>
+            <label for="emp_title">Employee Title:</label>
+            <input type="text" id="emp_title" formControlName="emp_title">
+          </div>
+          <div *ngIf="employeeForm.controls['emp_title'].invalid && employeeForm.controls['emp_title'].touched" class="error-message">
+            Employee Title is required.
+          </div>
+
+          <div>
+            <label for="emp_id">Employee ID:</label>
+            <input type="text" id="emp_id" formControlName="emp_id">
+          </div>
+          <div *ngIf="employeeForm.controls['emp_id'].invalid && employeeForm.controls['emp_id'].touched" class="error-message">
+            Employee ID is required.
+          </div>
+          <div>
+            <label for="emp_dob">Date of Birth:</label>
+            <input type="date" id="emp_dob" formControlName="emp_dob">
+          </div>
+          <div *ngIf="employeeForm.controls['emp_dob'].invalid && employeeForm.controls['emp_dob'].touched" class="error-message">
+            Date of Birth is required.
+          </div>
+          <div>
+            <label for="emp_address">emp_address:</label>
+            <input type="text" id="emp_address" formControlName="emp_address">
+          </div>
+          <div *ngIf="employeeForm.controls['emp_address'].invalid && employeeForm.controls['emp_address'].touched" class="error-message">
+            emp_address Title is required.
+          </div>
+          <div>
+            <label for="emp_state">emp_state:</label>
+            <input type="text" id="emp_state" formControlName="emp_state">
+          </div>        
+          <div *ngIf="employeeForm.controls['emp_state'].invalid && employeeForm.controls['emp_state'].touched" class="error-message">
+            emp_state is required.
+          </div>      
+          <div>
+            <label for="emp_mobile_no">Mobile Number:</label>
+            <input type="tel" id="emp_mobile_no" formControlName="emp_mobile_no">
+          </div>
+          <div *ngIf="employeeForm.controls['emp_mobile_no'].invalid && employeeForm.controls['emp_mobile_no'].touched" class="error-message">
+            emp_mobile_no is required.
+          </div>
+        
+        </div>
+        <div>
+          <div>
+            <label for="emp_pan_no">PAN Card Number:</label>
+            <input type="text" id="emp_pan_no" formControlName="emp_pan_no">
+          </div>
+          <div *ngIf="employeeForm.controls['emp_pan_no'].invalid && employeeForm.controls['emp_pan_no'].touched" class="error-message">
+            emp_pan_no is required.
+          </div>
+          <div>
+            <label for="emp_name">Employee Name:</label>
+            <input type="text" id="emp_name" formControlName="emp_name">
+          </div>
+          <div *ngIf="employeeForm.controls['emp_name'].invalid && employeeForm.controls['emp_name'].touched" class="error-message">
+            emp_name is required.
+          </div>
+          <div>
+            <label for="emp_doj">Date of Joining:</label>
+            <input type="date" id="emp_doj" formControlName="emp_doj">
+          </div>
+          <div *ngIf="employeeForm.controls['emp_doj'].invalid && employeeForm.controls['emp_doj'].touched" class="error-message">
+            emp_doj is required.
+          </div>
+          <div>
+            <label for="emp_city">emp_city:</label>
+            <input type="text" id="emp_city" formControlName="emp_city">
+          </div>
+          <div *ngIf="employeeForm.controls['emp_city'].invalid && employeeForm.controls['emp_city'].touched" class="error-message">
+            emp_city is required.
+          </div>
+          <div>
+            <label for="emp_pincode">emp_pincode:</label>
+            <input type="text" id="emp_pincode" formControlName="emp_pincode">
+          </div>
+          <div *ngIf="employeeForm.controls['emp_pincode'].invalid && employeeForm.controls['emp_pincode'].touched" class="error-message">
+            emp_pincode is required.
+          </div>
+          <div>
+            <label for="emp_mail_id">emp_mail_id ID:</label>
+            <input type="email" id="emp_mail_id" formControlName="emp_mail_id">
+          </div>
+          <div *ngIf="employeeForm.controls['emp_mail_id'].invalid && employeeForm.controls['emp_mail_id'].touched" class="error-message">
+            Employee Title is required.
+          </div>
+          <!-- <div>
+            <label for="emp_upload_pan">emp_upload_pan</label>
+            <input type="file" name="emp_upload_pan" id="emp_upload_pan" (change)="onFileSelected($event)" accept="image/*">
+            <span *ngIf="formTitle == 'Edit Employee Detail'">{{selectedFile}}</span>
+          </div> -->
+          <div class="file-input">
+            <label for="">emp_upload_pan </label> <br>
+            <label class="custom-file-input-label">             
+              <input type="file" (change)="onFileSelected($event)" accept="image/*" style="display: none;"><br>
+              <span>Choose File</span> <br>
+              <span>{{editpanimage ? editpanimage : editpanimage}}</span>
+              <button id="customFileButton"></button>             
+            </label>
+          </div>
+          <!-- <div *ngIf="employeeForm.controls['emp_upload_pan'].invalid && employeeForm.controls['emp_upload_pan'].touched" class="error-message">
+            Employee Title is required.
+          </div> -->
+          
+        </div>
+       
+      </div>
+      <div class="buttoncontainer">
+      <button type="submit">Submit</button>
+    </div>
+         
+        </form>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+      
+    </div>      
+
+    
+</div>
+<div>   
+      
+      <div class="mat-elevation-z8" *ngIf="display">
+        <table mat-table [dataSource]="dataSource" matSort>
+      
+          <!-- ID Column -->
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+            <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="emp_id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> emp_id </th>
+            <td mat-cell *matCellDef="let row"> {{row.emp_id}} </td>
+          </ng-container>
+      
+          
+          <ng-container matColumnDef="emp_name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Employee Name </th>
+            <td mat-cell *matCellDef="let row"> {{row.emp_name}} </td>
+          </ng-container>
+      
+          
+          <ng-container matColumnDef="emp_title">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Employee Title </th>
+            <td mat-cell *matCellDef="let row"> {{row.emp_title}} </td>
+          </ng-container>
+      
+          
+          <ng-container matColumnDef="emp_upload_pan">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> emp_upload_pan </th>
+            <td mat-cell *matCellDef="let row"><img [src]="'http://localhost/employee_management/'+row.emp_upload_pan" width="100" height="100" alt="" srcset=""> </td>
+          </ng-container>
+
+          <ng-container matColumnDef="emp_address">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> emp_address </th>
+            <td mat-cell *matCellDef="let row"> {{row.emp_address}} </td>
+          </ng-container>
+          <ng-container matColumnDef="emp_city">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> emp_city </th>
+            <td mat-cell *matCellDef="let row"> {{row.emp_city}} </td>
+          </ng-container>
+          <ng-container matColumnDef="emp_pincode">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> emp_pincode </th>
+            <td mat-cell *matCellDef="let row"> {{row.emp_pincode}} </td>
+          </ng-container>
+          <ng-container matColumnDef="emp_state">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> emp_state </th>
+            <td mat-cell *matCellDef="let row"> {{row.emp_state}} </td>
+          </ng-container>
+          <ng-container matColumnDef="emp_dob">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Date Of Birth </th>
+            <td mat-cell *matCellDef="let row"> {{row.emp_dob}} </td>
+          </ng-container>
+          <ng-container matColumnDef="emp_doj">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Date Of Joining </th>
+            <td mat-cell *matCellDef="let row"> {{row.emp_doj}} </td>
+          </ng-container>
+          <ng-container matColumnDef="emp_mail_id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> emp_mail_id </th>
+            <td mat-cell *matCellDef="let row"> {{row.emp_mail_id}} </td>
+          </ng-container>
+          <ng-container matColumnDef="emp_mobile_no">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Mobile Number </th>
+            <td mat-cell *matCellDef="let row"> {{row.emp_mobile_no}} </td>
+          </ng-container>
+          <ng-container matColumnDef="emp_pan_no">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Pan Card Number </th>
+            <td mat-cell *matCellDef="let row"> {{row.emp_pan_no}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Action</th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-icon-button color="primary" data-toggle="modal" data-target="#myModal" (click)="editEmployee(element.id)" style="margin-right: 5px">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="deleteEmployee(element.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      
+          <!-- Row shown when there is no matching data. -->
+          
+        </table>           
+        
+      </div>
+      <mat-paginator
+      [length]="dataSource.data.length"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="pageSizeOptions"
+      showFirstLastButtons
+      (page)="onPageChange($event)"
+    ></mat-paginator>   
+      
+</div>
+

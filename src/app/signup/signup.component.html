@@ -1,0 +1,43 @@
+<div class="login-container">    
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <h1 style="text-align: center;">SignUp</h1>
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input type="text" id="username" formControlName="user_name" class="form-control">
+      <div class="error-message" *ngIf="form.get('user_name').invalid && (form.get('user_name').dirty || form.get('user_name').touched)" >
+        Username is required
+      </div>
+    </div>
+  
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" formControlName="password" class="form-control">
+      <div class="error-message" *ngIf="form.get('password').invalid && (form.get('password').dirty || form.get('password').touched)" >
+        Password is required
+      </div>
+    </div>
+  
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" formControlName="email_id" class="form-control">
+      <div class="error-message" *ngIf="form.get('email_id').invalid && (form.get('email_id').dirty || form.get('email_id').touched)" >
+        Email is required
+      </div>
+    </div>
+  
+    <div class="form-group">
+      <label for="userType">User Type</label>
+      <select id="userType" formControlName="userType" class="form-control">
+        <option value="">Select user type</option>
+        <option value="admin">Admin</option>
+        <option value="user">User</option>
+      </select>
+      <div class="error-message" *ngIf="form.get('userType').invalid && (form.get('userType').dirty || form.get('userType').touched)" >
+        User type is required
+      </div>
+    </div>
+  
+    <button type="submit" class="btn btn-primary" style="margin-bottom: 10px;">Submit</button>
+    <button routerLink="/">Login</button>
+  </form>
+</div>  
